@@ -3,6 +3,7 @@ Pure Go GOST cryptographic functions library.
 * 28147-89 block cipher with ECB, CTR, CFB, MAC modes of operation
 * various 28147-89-related S-boxes included
 * 34.11-94 hash function
+* 34.11-2012 hash function
 
 Known problems:
 * intermediate calculation values are not zeroed

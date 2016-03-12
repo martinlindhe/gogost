@@ -22,7 +22,7 @@ import (
 	"encoding/binary"
 	"math/big"
 
-	"gogost/gost28147"
+	"github.com/stargrave/gogost/gost28147"
 )
 
 const (

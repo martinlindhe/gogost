@@ -265,6 +265,5 @@ func (h *Hash) Sum(in []byte) []byte {
 	chkBytes := chk.Bytes()
 	copy(block[BlockSize-len(chkBytes):], chkBytes)
 	hsh = h.step(hsh, *block)
-	blockReverse(block[:], hsh[:])
-	return append(in, block[:]...)
+	return append(in, hsh[:]...)
 }

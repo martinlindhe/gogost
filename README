@@ -4,9 +4,12 @@ Pure Go GOST cryptographic functions library.
 * various 28147-89-related S-boxes included
 * 34.11-94 hash function
 * 34.11-2012 hash function
+* 34.10-2001, 34.10-2012 public key signature function
+* various 34.10 curve parameters included
 
 Known problems:
 * intermediate calculation values are not zeroed
+* 34.10 is not time constant
 
 GoGOST is free software: see the file COPYING for copying conditions.
 

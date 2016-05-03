@@ -9,3 +9,9 @@ Known problems:
 * intermediate calculation values are not zeroed
 
 GoGOST is free software: see the file COPYING for copying conditions.
+
+Please send bug reports and patches to the author:
+stargrave at stargrave dot org.
+
+Development Git source code repository currently is located here:
+http://git.cypherpunks.ru/cgit.cgi/gogost.git/

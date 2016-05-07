@@ -58,12 +58,12 @@ func (pk *PublicKey) VerifyDigest(digest, signature []byte) (bool, error) {
 	}
 	s := bytes2big(signature[:pk.ds])
 	r := bytes2big(signature[pk.ds:])
-	if r.Cmp(Zero) <= 0 || r.Cmp(pk.c.Q) >= 0 || s.Cmp(Zero) <= 0 || s.Cmp(pk.c.Q) >= 0 {
+	if r.Cmp(zero) <= 0 || r.Cmp(pk.c.Q) >= 0 || s.Cmp(zero) <= 0 || s.Cmp(pk.c.Q) >= 0 {
 		return false, nil
 	}
 	e := bytes2big(digest)
 	e.Mod(e, pk.c.Q)
-	if e.Cmp(Zero) == 0 {
+	if e.Cmp(zero) == 0 {
 		e = big.NewInt(1)
 	}
 	v := big.NewInt(0)
@@ -85,7 +85,7 @@ func (pk *PublicKey) VerifyDigest(digest, signature []byte) (bool, error) {
 	}
 	lm := big.NewInt(0)
 	lm.Sub(q1x, p1x)
-	if lm.Cmp(Zero) < 0 {
+	if lm.Cmp(zero) < 0 {
 		lm.Add(lm, pk.c.P)
 	}
 	lm.ModInverse(lm, pk.c.P)
@@ -97,7 +97,7 @@ func (pk *PublicKey) VerifyDigest(digest, signature []byte) (bool, error) {
 	lm.Sub(lm, p1x)
 	lm.Sub(lm, q1x)
 	lm.Mod(lm, pk.c.P)
-	if lm.Cmp(Zero) < 0 {
+	if lm.Cmp(zero) < 0 {
 		lm.Add(lm, pk.c.P)
 	}
 	lm.Mod(lm, pk.c.Q)

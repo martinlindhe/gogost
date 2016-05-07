@@ -22,11 +22,11 @@ import (
 )
 
 var (
-	Zero *big.Int = big.NewInt(0)
-	Int2 *big.Int = big.NewInt(2)
-	Int3 *big.Int = big.NewInt(3)
-	Int4 *big.Int = big.NewInt(4)
-	Int8 *big.Int = big.NewInt(8)
+	zero *big.Int = big.NewInt(0)
+	bigInt2 *big.Int = big.NewInt(2)
+	bigInt3 *big.Int = big.NewInt(3)
+	bigInt4 *big.Int = big.NewInt(4)
+	bigInt8 *big.Int = big.NewInt(8)
 )
 
 type Curve struct {
@@ -83,10 +83,10 @@ func (c *Curve) Exp(degree, xS, yS *big.Int) (*big.Int, *big.Int, error) {
 		return nil, nil, errors.New("Bad degree value")
 	}
 	for ; i >= 0; i -= 1 {
-		if z.Cmp(Zero) != 0 {
+		if z.Cmp(zero) != 0 {
 			lm2.Mul(x, x)
 			lm2.Mod(lm2, c.P)
-			lm2.Mul(lm2, Int3)
+			lm2.Mul(lm2, bigInt3)
 			lm1.Mul(z, z)
 			lm1.Mul(lm1, c.A)
 			lm1.Mod(lm1, c.P)
@@ -96,41 +96,41 @@ func (c *Curve) Exp(degree, xS, yS *big.Int) (*big.Int, *big.Int, error) {
 			lm3.Mul(lm2, x)
 			lm3.Mul(lm3, y)
 			lm3.Mod(lm3, c.P)
-			lm5.Mul(lm3, Int8)
+			lm5.Mul(lm3, bigInt8)
 			lm4.Mul(lm1, lm1)
 			lm4.Mod(lm4, c.P)
 			lm4.Sub(lm4, lm5)
-			lm5.Mul(lm2, Int2)
+			lm5.Mul(lm2, bigInt2)
 			lm5.Mod(lm5, c.P)
 			lm6.Mul(lm5, lm5)
-			lm6.Mul(lm6, Int2)
+			lm6.Mul(lm6, bigInt2)
 			lm6.Mod(lm6, c.P)
 			x.Mul(lm4, lm5)
 			x.Mod(x, c.P)
 			lm7.Mul(y, y)
 			lm7.Mod(lm7, c.P)
 			lm7.Mul(lm7, lm6)
-			y.Mul(lm3, Int4)
+			y.Mul(lm3, bigInt4)
 			y.Sub(y, lm4)
 			y.Mul(y, lm1)
 			y.Sub(y, lm7)
 			y.Mod(y, c.P)
 			z.Mul(lm2, lm6)
 			z.Mod(z, c.P)
-			if x.Cmp(Zero) < 0 {
+			if x.Cmp(zero) < 0 {
 				x.Add(x, c.P)
 			}
-			if y.Cmp(Zero) < 0 {
+			if y.Cmp(zero) < 0 {
 				y.Add(y, c.P)
 			}
-			if z.Cmp(Zero) < 0 {
+			if z.Cmp(zero) < 0 {
 				z.Add(z, c.P)
 			}
 		}
 		if degree.Bit(i) == 1 {
-			if z.Cmp(Zero) == 0 {
-				x.Add(Zero, xS)
-				y.Add(Zero, yS)
+			if z.Cmp(zero) == 0 {
+				x.Add(zero, xS)
+				y.Add(zero, yS)
 				z = big.NewInt(1)
 			} else {
 				lm1.Mul(yS, z)
@@ -143,7 +143,7 @@ func (c *Curve) Exp(degree, xS, yS *big.Int) (*big.Int, *big.Int, error) {
 				lm2.Mod(lm2, c.P)
 				lm4.Mul(lm2, lm3)
 				lm4.Mod(lm4, c.P)
-				lm5.Mul(Int2, x)
+				lm5.Mul(bigInt2, x)
 				lm5.Mul(lm5, lm2)
 				lm5.Mod(lm5, c.P)
 				lm6.Mul(lm1, lm1)
@@ -162,19 +162,19 @@ func (c *Curve) Exp(degree, xS, yS *big.Int) (*big.Int, *big.Int, error) {
 				x.Mod(x, c.P)
 				z.Mul(z, lm4)
 				z.Mod(z, c.P)
-				if x.Cmp(Zero) < 0 {
+				if x.Cmp(zero) < 0 {
 					x.Add(x, c.P)
 				}
-				if y.Cmp(Zero) < 0 {
+				if y.Cmp(zero) < 0 {
 					y.Add(y, c.P)
 				}
-				if z.Cmp(Zero) < 0 {
+				if z.Cmp(zero) < 0 {
 					z.Add(z, c.P)
 				}
 			}
 		}
 	}
-	if z.Cmp(Zero) == 0 {
+	if z.Cmp(zero) == 0 {
 		return big.NewInt(-1), big.NewInt(-1), nil
 	}
 	lm1.ModInverse(z, c.P)

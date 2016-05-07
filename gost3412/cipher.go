@@ -23,11 +23,11 @@ const (
 )
 
 var (
-	Lc [BlockSize]byte = [BlockSize]byte{
+	lc [BlockSize]byte = [BlockSize]byte{
 		148, 32, 133, 16, 194, 192, 1, 251, 1, 192, 194, 16,
 		133, 32, 148, 1,
 	}
-	Pi [256]byte = [256]byte{
+	pi [256]byte = [256]byte{
 		252, 238, 221, 17, 207, 110, 49, 22, 251, 196, 250,
 		218, 35, 197, 4, 77, 233, 119, 240, 219, 147, 46,
 		153, 186, 23, 54, 241, 187, 20, 205, 95, 193, 249,
@@ -52,8 +52,8 @@ var (
 		190, 229, 108, 82, 89, 166, 116, 210, 230, 244, 180,
 		192, 209, 102, 175, 194, 57, 75, 99, 182,
 	}
-	PiInv [256]byte
-	C     [32]*[BlockSize]byte
+	piInv [256]byte
+	cBlk     [32]*[BlockSize]byte
 )
 
 func gf(a, b byte) (c byte) {
@@ -71,50 +71,50 @@ func gf(a, b byte) (c byte) {
 	return
 }
 
-func L(blk *[BlockSize]byte, rounds int) {
+func l(blk *[BlockSize]byte, rounds int) {
 	var t byte
 	var i int
 	for ; rounds > 0; rounds-- {
 		t = blk[15]
 		for i = 14; i >= 0; i-- {
 			blk[i+1] = blk[i]
-			t ^= gf(blk[i], Lc[i])
+			t ^= gf(blk[i], lc[i])
 		}
 		blk[0] = t
 	}
 }
 
-func LInv(blk *[BlockSize]byte) {
+func lInv(blk *[BlockSize]byte) {
 	var t byte
 	var i int
 	for n := 0; n < BlockSize; n++ {
 		t = blk[0]
 		for i = 0; i < 15; i++ {
 			blk[i] = blk[i+1]
-			t ^= gf(blk[i], Lc[i])
+			t ^= gf(blk[i], lc[i])
 		}
 		blk[15] = t
 	}
 }
 
 func init() {
-	PiInvP := new([256]byte)
+	piInvP := new([256]byte)
 	for i := 0; i < 256; i++ {
-		PiInvP[int(Pi[i])] = byte(i)
+		piInvP[int(pi[i])] = byte(i)
 	}
-	PiInv = *PiInvP
+	piInv = *piInvP
 	CP := new([32]*[BlockSize]byte)
 	for i := 0; i < 32; i++ {
 		CP[i] = new([BlockSize]byte)
 		CP[i][15] = byte(i) + 1
-		L(CP[i], 16)
+		l(CP[i], 16)
 	}
-	C = *CP
+	cBlk = *CP
 }
 
-func S(blk *[BlockSize]byte) {
+func s(blk *[BlockSize]byte) {
 	for i := 0; i < BlockSize; i++ {
-		blk[i] = Pi[int(blk[i])]
+		blk[i] = pi[int(blk[i])]
 	}
 }
 
@@ -145,9 +145,9 @@ func NewCipher(key [KeySize]byte) *Cipher {
 	copy(ks[1][:], kr1[:])
 	for i := 0; i < 4; i++ {
 		for j := 0; j < 8; j++ {
-			xor(krt, kr0, C[8*i+j])
-			S(krt)
-			L(krt, 16)
+			xor(krt, kr0, cBlk[8*i+j])
+			s(krt)
+			l(krt, 16)
 			xor(krt, krt, kr1)
 			copy(kr1[:], kr0[:])
 			copy(kr0[:], krt[:])
@@ -165,8 +165,8 @@ func (c *Cipher) Encrypt(dst, src []byte) {
 	copy(blk[:], src)
 	for i := 0; i < 9; i++ {
 		xor(blk, blk, c.ks[i])
-		S(blk)
-		L(blk, 16)
+		s(blk)
+		l(blk, 16)
 	}
 	xor(blk, blk, c.ks[9])
 	copy(dst[:BlockSize], blk[:])
@@ -178,9 +178,9 @@ func (c *Cipher) Decrypt(dst, src []byte) {
 	var n int
 	for i := 9; i > 0; i-- {
 		xor(blk, blk, c.ks[i])
-		LInv(blk)
+		lInv(blk)
 		for n = 0; n < BlockSize; n++ {
-			blk[n] = PiInv[int(blk[n])]
+			blk[n] = piInv[int(blk[n])]
 		}
 	}
 	xor(blk, blk, c.ks[0])

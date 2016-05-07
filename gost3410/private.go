@@ -33,8 +33,8 @@ func NewPrivateKey(curve *Curve, ds DigestSize, raw []byte) (*PrivateKey, error)
 	copy(key, raw)
 	reverse(key)
 	k := bytes2big(key)
-	if k.Cmp(Zero) == 0 {
-		return nil, errors.New("Zero private key")
+	if k.Cmp(zero) == 0 {
+		return nil, errors.New("zero private key")
 	}
 	return &PrivateKey{curve, int(ds), k}, nil
 }
@@ -67,7 +67,7 @@ func (pk *PrivateKey) SignDigest(digest []byte, rand io.Reader) ([]byte, error) 
 	}
 	e := bytes2big(digest)
 	e.Mod(e, pk.c.Q)
-	if e.Cmp(Zero) == 0 {
+	if e.Cmp(zero) == 0 {
 		e = big.NewInt(1)
 	}
 	kRaw := make([]byte, pk.ds)
@@ -82,7 +82,7 @@ Retry:
 	}
 	k = bytes2big(kRaw)
 	k.Mod(k, pk.c.Q)
-	if k.Cmp(Zero) == 0 {
+	if k.Cmp(zero) == 0 {
 		goto Retry
 	}
 	r, _, err = pk.c.Exp(k, pk.c.Bx, pk.c.By)
@@ -90,14 +90,14 @@ Retry:
 		return nil, err
 	}
 	r.Mod(r, pk.c.Q)
-	if r.Cmp(Zero) == 0 {
+	if r.Cmp(zero) == 0 {
 		goto Retry
 	}
 	d.Mul(pk.key, r)
 	k.Mul(k, e)
 	s.Add(d, k)
 	s.Mod(s, pk.c.Q)
-	if s.Cmp(Zero) == 0 {
+	if s.Cmp(zero) == 0 {
 		goto Retry
 	}
 	return append(pad(s.Bytes(), pk.ds), pad(r.Bytes(), pk.ds)...), nil

@@ -1,0 +1,109 @@
+\input texinfo
+@documentencoding UTF-8
+@settitle GoGOST
+
+@copying
+Copyright @copyright{} 2015-2016 @email{stargrave@@stargrave.org, Sergey Matveev}
+@end copying
+
+@node Top
+@top GoGOST
+
+Pure Go GOST cryptographic functions library.
+GOST is GOvernment STandard of Russian Federation (and Soviet Union).
+It is
+@url{https://www.gnu.org/philosophy/pragmatic.html, copylefted}
+@url{https://www.gnu.org/philosophy/free-sw.html, free software}:
+licenced under @url{https://www.gnu.org/licenses/gpl-3.0.html, GPLv3+}.
+
+Currently supported algorithms are:
+
+@itemize
+@item GOST 28147-89 (@url{https://tools.ietf.org/html/rfc5830.html, RFC 5830})
+    block cipher with ECB, CNT (CTR), CFB, MAC,
+    CBC (@url{https://tools.ietf.org/html/rfc4357.html, RFC 4357})
+    modes of operation
+@item various 28147-89-related S-boxes included
+@item GOST R 34.11-94 hash function
+    (@url{https://tools.ietf.org/html/rfc5831.html, RFC 5831})
+@item GOST R 34.11-2012 Стрибог (Streebog) hash function
+    (@url{https://tools.ietf.org/html/rfc6986.html, RFC 6986})
+@item GOST R 34.10-2001
+    (@url{https://tools.ietf.org/html/rfc5832.html, RFC 5832})
+    public key signature function
+@item GOST R 34.10-2012
+    (@url{https://tools.ietf.org/html/rfc7091.html, RFC 7091})
+    public key signature function
+@item various 34.10 curve parameters included
+@item GOST R 34.12-2015 128-bit block cipher Кузнечик (Kuznechik)
+    (@url{https://tools.ietf.org/html/rfc7801.html, RFC 7801})
+@item GOST R 34.13-2015 padding methods
+@end itemize
+
+Please send questions, bug reports and patches to
+@url{https://lists.cypherpunks.ru/mailman/listinfo/gost, gost}
+mailing list. Announcements also go to this mailing list.
+
+@insertcopying
+
+@node Download
+@unnumbered Download
+
+Preferable way is to download tarball with the signature from
+website and, for example, run tests with benchmarks:
+
+@verbatim
+% wget http://www.cypherpunks.ru/gogost/gogost-1.1.tar.xz
+% wget http://www.cypherpunks.ru/gogost/gogost-1.1.tar.xz.sig
+% gpg --verify gogost-1.1.tar.xz.sig gogost-1.1.tar.xz
+% xz -d < gogost-1.1.tar.gz | tar xf -
+% make -C gogost-1.1 bench
+@end verbatim
+
+@multitable {XXXXX} {XXXX KiB} {link sign} {xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx} {xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx}
+@headitem Version @tab Size @tab Tarball @tab SHA256 checksum @tab Streebog-256 checksum
+
+@item 1.1 @tab 33 KiB
+@tab @url{gogost-1.1.tar.xz, link} @url{gogost-1.1.tar.xz.sig, sign}
+@tab @code{26D37912 6FE220C1 C0381835 DEFFDC4B BDCDC394 15D6E9C1 F8A5A302 04F9452B}
+@tab @code{313fa58c2c030dd5acd20b524842bd2d4ec7403fcfca2a4a238ddc187c3ef0df}
+
+@end multitable
+
+You @strong{have to} verify downloaded tarballs integrity and
+authenticity to be sure that you retrieved trusted and untampered
+software. @url{https://www.gnupg.org/, The GNU Privacy Guard} is used
+for that purpose.
+
+For the very first time it it necessary to get signing public key and
+import it. It is provided below, but you should check alternative
+resources.
+
+@verbatim
+pub   rsa2048/0x82343436696FC85A 2016-09-13 [SC]
+      CEBD 1282 2C46 9C02 A81A  0467 8234 3436 696F C85A
+uid   GoGOST releases <gogost at cypherpunks dot ru>
+@end verbatim
+
+@itemize
+
+@item @url{https://lists.cypherpunks.ru/mailman/listinfo/gost, gost} maillist
+
+@item
+@verbatim
+% gpg --keyserver hkp://keys.gnupg.net/ --recv-keys 0x82343436696FC85A
+% gpg --auto-key-locate dane --locate-keys gogost at cypherpunks dot ru
+% gpg --auto-key-locate wkd --locate-keys gogost at cypherpunks dot ru
+% gpg --auto-key-locate pka --locate-keys gogost at cypherpunks dot ru
+@end verbatim
+
+@item
+@verbatiminclude PUBKEY.asc
+
+@end itemize
+
+You can obtain development source code by cloning
+@url{http://git-scm.com/, Git}
+@url{https://git.cypherpunks.ru/cgit.cgi/gogost.git/, repository}.
+
+@bye

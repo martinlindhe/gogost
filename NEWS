@@ -1,0 +1,7 @@
+1.1:
+    * gogost-streebog is able to use either 256 or 512 bits digest size
+    * 34.13-2015 padding methods
+    * 28147-89 CBC mode of operation
+
+1.0:
+    Initial release

@@ -1,0 +1,26 @@
+Preferable way is to download tarball with the signature from official
+website and, for example, run tests with benchmarks:
+
+    % wget http://www.cypherpunks.ru/gogost/gogost-1.0.tar.xz
+    % wget http://www.cypherpunks.ru/gogost/gogost-1.0.tar.xz.sig
+    % gpg --verify gogost-1.0.tar.xz.sig gogost-1.0.tar.xz
+    % xz -d < gogost-1.0.tar.gz | tar xf -
+    % make -C gogost-1.0 bench
+
+You have to verify downloaded tarballs integrity and authenticity to be
+sure that you retrieved trusted and untampered software. GNU Privacy
+Guard is used for that purpose.
+
+For the very first time it it necessary to get signing public key and
+import it. It is provided below, but you should check alternative
+resources.
+
+    pub   rsa2048/0x82343436696FC85A 2016-09-13 [SC]
+          CEBD 1282 2C46 9C02 A81A  0467 8234 3436 696F C85A
+    uid   GoGOST releases <gogost at cypherpunks dot ru>
+
+    Look in PUBKEY.asc file.
+    % gpg --keyserver hkp://keys.gnupg.net/ --recv-keys 0x82343436696FC85A
+    % gpg --auto-key-locate dane --locate-keys gogost at cypherpunks dot ru
+    % gpg --auto-key-locate wkd --locate-keys gogost at cypherpunks dot ru
+    % gpg --auto-key-locate pka --locate-keys gogost at cypherpunks dot ru

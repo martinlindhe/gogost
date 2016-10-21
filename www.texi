@@ -15,6 +15,7 @@ It is
 @url{https://www.gnu.org/philosophy/pragmatic.html, copylefted}
 @url{https://www.gnu.org/philosophy/free-sw.html, free software}:
 licenced under @url{https://www.gnu.org/licenses/gpl-3.0.html, GPLv3+}.
+You can read about GOST algorithms @url{http://www.cypherpunks.ru/gost/, more}.
 
 Currently supported algorithms are:
 

@@ -66,6 +66,11 @@ website and, for example, run tests with benchmarks:
 @multitable {XXXXX} {XXXX KiB} {link sign} {xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx} {xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx}
 @headitem Version @tab Size @tab Tarball @tab SHA256 checksum @tab Streebog-256 checksum
 
+@item 1.2 @tab 34 KiB
+@tab @url{gogost-1.2.tar.xz, link} @url{gogost-1.2.tar.xz.sig, sign}
+@tab @code{B894D0E4 923F0361 8A33A360 65AE860F FCFAF8F5 42A82D71 EA0A0BA7 7BC99093}
+@tab @code{fc6d3533e28d356398877674b6ee18954581c7f46832a5cf994ae243ab00ddf5}
+
 @item 1.1 @tab 33 KiB
 @tab @url{gogost-1.1.tar.xz, link} @url{gogost-1.1.tar.xz.sig, sign}
 @tab @code{26D37912 6FE220C1 C0381835 DEFFDC4B BDCDC394 15D6E9C1 F8A5A302 04F9452B}

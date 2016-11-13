@@ -25,8 +25,6 @@ Currently supported algorithms are:
     CBC (@url{https://tools.ietf.org/html/rfc4357.html, RFC 4357})
     modes of operation
 @item various 28147-89-related S-boxes included
-@item VKO 34.10-2001 Diffie-Hellman function
-    (@url{https://tools.ietf.org/html/rfc4357.html, RFC 4357})
 @item GOST R 34.11-94 hash function
     (@url{https://tools.ietf.org/html/rfc5831.html, RFC 5831})
 @item GOST R 34.11-2012 Стрибог (Streebog) hash function
@@ -38,6 +36,8 @@ Currently supported algorithms are:
     (@url{https://tools.ietf.org/html/rfc7091.html, RFC 7091})
     public key signature function
 @item various 34.10 curve parameters included
+@item VKO 34.10-2001 Diffie-Hellman function
+    (@url{https://tools.ietf.org/html/rfc4357.html, RFC 4357})
 @item GOST R 34.12-2015 128-bit block cipher Кузнечик (Kuznechik)
     (@url{https://tools.ietf.org/html/rfc7801.html, RFC 7801})
 @item GOST R 34.13-2015 padding methods

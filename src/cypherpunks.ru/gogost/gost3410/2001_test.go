@@ -19,6 +19,7 @@ package gost3410
 import (
 	"bytes"
 	"crypto/rand"
+	"encoding/hex"
 	"testing"
 	"testing/quick"
 )
@@ -159,5 +160,47 @@ func BenchmarkVerify2001(b *testing.B) {
 	b.ResetTimer()
 	for i := 0; i < b.N; i++ {
 		pub.VerifyDigest(digest, sign)
+	}
+}
+
+func TestVKO(t *testing.T) {
+	c, _ := NewCurveFromParams(CurveParamsGostR34102001Test)
+	ukm, _ := hex.DecodeString("33a252f825be7251")
+	prvRaw1, _ := hex.DecodeString("1df129e43dab345b68f6a852f4162dc69f36b2f84717d08755cc5c44150bf928")
+	prvRaw2, _ := hex.DecodeString("5b9356c6474f913f1e83885ea0edd5df1a43fd9d799d219093241157ac9ed473")
+	kek, _ := hex.DecodeString("ee4618a0dbb10cb31777b4b86a53d9e7ef6cb3e400101410f0c0f2af46c494a6")
+	prv1, _ := NewPrivateKey(c, DigestSize2001, prvRaw1)
+	prv2, _ := NewPrivateKey(c, DigestSize2001, prvRaw2)
+	pub1, _ := prv1.PublicKey()
+	pub2, _ := prv2.PublicKey()
+	kek1, _ := prv1.KEK(pub2, ukm)
+	kek2, _ := prv2.KEK(pub1, ukm)
+	if bytes.Compare(kek1, kek2) != 0 {
+		t.FailNow()
+	}
+	if bytes.Compare(kek1, kek) != 0 {
+		t.FailNow()
+	}
+}
+
+func TestRandomVKO(t *testing.T) {
+	c, _ := NewCurveFromParams(CurveParamsGostR34102001Test)
+	f := func(prvRaw1 [32]byte, prvRaw2 [32]byte, ukm [8]byte) bool {
+		prv1, err := NewPrivateKey(c, DigestSize2001, prvRaw1[:])
+		if err != nil {
+			return false
+		}
+		prv2, err := NewPrivateKey(c, DigestSize2001, prvRaw2[:])
+		if err != nil {
+			return false
+		}
+		pub1, _ := prv1.PublicKey()
+		pub2, _ := prv2.PublicKey()
+		kek1, _ := prv1.KEK(pub2, ukm[:])
+		kek2, _ := prv2.KEK(pub1, ukm[:])
+		return bytes.Compare(kek1, kek2) == 0
+	}
+	if err := quick.Check(f, nil); err != nil {
+		t.Error(err)
 	}
 }

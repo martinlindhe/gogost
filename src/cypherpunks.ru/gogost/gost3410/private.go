@@ -20,6 +20,9 @@ import (
 	"errors"
 	"io"
 	"math/big"
+
+	"cypherpunks.ru/gogost/gost28147"
+	"cypherpunks.ru/gogost/gost341194"
 )
 
 type PrivateKey struct {
@@ -101,4 +104,34 @@ Retry:
 		goto Retry
 	}
 	return append(pad(s.Bytes(), pk.ds), pad(r.Bytes(), pk.ds)...), nil
+}
+
+// Make Diffie-Hellman computation. Key Encryption Key calculation.
+// UKM is user keying material, also called VKO-factor, 8-bytes long.
+// It is based on RFC 4357 VKO GOST 34.10-2001 with little-endian hash
+// output.
+func (pk *PrivateKey) KEK(pub *PublicKey, ukm []byte) ([]byte, error) {
+	if len(ukm) != 8 {
+		return nil, errors.New("UKM must be 8 bytes long")
+	}
+	keyX, keyY, err := pk.c.Exp(pk.key, pub.x, pub.y)
+	if err != nil {
+		return nil, err
+	}
+	t := make([]byte, DigestSize2001)
+	copy(t[int(DigestSize2001)-len(ukm):], ukm)
+	keyX, keyY, err = pk.c.Exp(bytes2big(t), keyX, keyY)
+	if err != nil {
+		return nil, err
+	}
+	h := gost341194.New(&gost28147.GostR3411_94_CryptoProParamSet)
+	copy(t, pad(keyX.Bytes(), int(DigestSize2001)))
+	reverse(t)
+	h.Write(t)
+	copy(t, pad(keyY.Bytes(), int(DigestSize2001)))
+	reverse(t)
+	h.Write(t)
+	t = h.Sum(t[:0])
+	reverse(t)
+	return t, nil
 }

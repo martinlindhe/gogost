@@ -25,6 +25,8 @@ Currently supported algorithms are:
     CBC (@url{https://tools.ietf.org/html/rfc4357.html, RFC 4357})
     modes of operation
 @item various 28147-89-related S-boxes included
+@item VKO 34.10-2001 Diffie-Hellman function
+    (@url{https://tools.ietf.org/html/rfc4357.html, RFC 4357})
 @item GOST R 34.11-94 hash function
     (@url{https://tools.ietf.org/html/rfc5831.html, RFC 5831})
 @item GOST R 34.11-2012 Стрибог (Streebog) hash function

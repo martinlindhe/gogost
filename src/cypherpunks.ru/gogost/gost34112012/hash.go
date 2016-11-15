@@ -24,6 +24,7 @@ import (
 
 const (
 	BlockSize = 64
+	Size = 64
 )
 
 var (

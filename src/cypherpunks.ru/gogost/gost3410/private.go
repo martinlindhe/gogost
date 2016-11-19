@@ -108,7 +108,7 @@ Retry:
 
 // Make Diffie-Hellman computation. Key Encryption Key calculation.
 // UKM is user keying material, also called VKO-factor, 8-bytes long.
-// It is based on RFC 4357 VKO GOST 34.10-2001 with little-endian hash
+// It is based on RFC 4357 VKO GOST R 34.10-2001 with little-endian hash
 // output.
 func (pk *PrivateKey) KEK(pub *PublicKey, ukm []byte) ([]byte, error) {
 	if len(ukm) != 8 {

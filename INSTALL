@@ -1,11 +1,11 @@
 Preferable way is to download tarball with the signature from official
 website and, for example, run tests with benchmarks:
 
-    % wget http://www.cypherpunks.ru/gogost/gogost-1.0.tar.xz
-    % wget http://www.cypherpunks.ru/gogost/gogost-1.0.tar.xz.sig
-    % gpg --verify gogost-1.0.tar.xz.sig gogost-1.0.tar.xz
-    % xz -d < gogost-1.0.tar.gz | tar xf -
-    % make -C gogost-1.0 bench
+    % wget http://www.cypherpunks.ru/gogost/gogost-1.1.tar.xz
+    % wget http://www.cypherpunks.ru/gogost/gogost-1.1.tar.xz.sig
+    % gpg --verify gogost-1.1.tar.xz.sig gogost-1.1.tar.xz
+    % xz -d < gogost-1.1.tar.gz | tar xf -
+    % make -C gogost-1.1 bench
 
 You have to verify downloaded tarballs integrity and authenticity to be
 sure that you retrieved trusted and untampered software. GNU Privacy

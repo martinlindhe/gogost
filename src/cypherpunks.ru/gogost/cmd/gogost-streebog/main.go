@@ -21,15 +21,17 @@ import (
 	"encoding/hex"
 	"flag"
 	"fmt"
+	"hash"
 	"io"
 	"os"
 
 	"cypherpunks.ru/gogost"
-	"cypherpunks.ru/gogost/gost34112012"
+	"cypherpunks.ru/gogost/gost34112012256"
+	"cypherpunks.ru/gogost/gost34112012512"
 )
 
 var (
-	digestSize = flag.Int("size", 256, "Digest size (either 256 or 512)")
+	digestSize = flag.Int("size", 256, "Digest size in bits (either 256 or 512)")
 	version    = flag.Bool("version", false, "Print version information")
 )
 
@@ -39,7 +41,12 @@ func main() {
 		fmt.Println(gogost.Version)
 		return
 	}
-	h := gost34112012.New(*digestSize)
+	var h hash.Hash
+	if *digestSize == 256 {
+		h = gost34112012256.New()
+	} else {
+		h = gost34112012512.New()
+	}
 	io.Copy(h, os.Stdin)
 	fmt.Println(hex.EncodeToString(h.Sum(nil)))
 }

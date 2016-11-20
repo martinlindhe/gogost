@@ -24,7 +24,6 @@ import (
 
 const (
 	BlockSize = 64
-	Size = 64
 )
 
 var (
@@ -279,10 +278,9 @@ type Hash struct {
 }
 
 // Create new hash object with specified size digest size.
-// Size is either 512 or 256 (bits).
 func New(size int) *Hash {
-	if size != 256 && size != 512 {
-		panic("size must be either 256 or 512")
+	if size != 32 && size != 64 {
+		panic("size must be either 32 or 64")
 	}
 	h := Hash{
 		size: size,
@@ -299,7 +297,7 @@ func (h *Hash) Reset() {
 	h.buf = nil
 	for i := 0; i < BlockSize; i++ {
 		h.chk[i] = 0
-		if h.size == 256 {
+		if h.size == 32 {
 			h.hsh[i] = 1
 		} else {
 			h.hsh[i] = 0
@@ -312,7 +310,7 @@ func (h *Hash) BlockSize() int {
 }
 
 func (h *Hash) Size() int {
-	return h.size / 8
+	return h.size
 }
 
 func (h *Hash) Write(data []byte) (int, error) {
@@ -336,7 +334,7 @@ func (h *Hash) Sum(in []byte) []byte {
 	binary.LittleEndian.PutUint64(h.tmp[:], h.n+uint64(len(h.buf))*8)
 	hsh = g(0, hsh, h.tmp)
 	hsh = g(0, hsh, add512bit(h.chk, buf))
-	if h.size == 256 {
+	if h.size == 32 {
 		return append(in, hsh[BlockSize/2:]...)
 	}
 	return append(in, hsh[:]...)

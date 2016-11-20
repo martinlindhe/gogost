@@ -25,13 +25,13 @@ import (
 )
 
 func TestHashInterface(t *testing.T) {
-	h := New(512)
+	h := New(64)
 	var _ hash.Hash = h
 }
 
 func TestVectors(t *testing.T) {
-	h512 := New(512)
-	h256 := New(256)
+	h512 := New(64)
+	h256 := New(32)
 
 	// First vector
 	m := []byte{
@@ -106,7 +106,7 @@ func TestVectors(t *testing.T) {
 }
 
 func TestBlocksized(t *testing.T) {
-	h := New(512)
+	h := New(64)
 	m := make([]byte, BlockSize)
 	for i := 0; i < BlockSize; i++ {
 		m[i] = byte(i)
@@ -127,7 +127,7 @@ func TestBlocksized(t *testing.T) {
 }
 
 func TestBehaviour(t *testing.T) {
-	h := New(512)
+	h := New(64)
 	// Sum does not change the state
 	hsh1 := h.Sum(nil)
 	if bytes.Compare(h.Sum(nil), hsh1) != 0 {
@@ -146,7 +146,7 @@ func TestBehaviour(t *testing.T) {
 }
 
 func TestRandom(t *testing.T) {
-	h := New(512)
+	h := New(64)
 	f := func(data []byte) bool {
 		h.Reset()
 		h.Write(data)
@@ -164,7 +164,7 @@ func TestRandom(t *testing.T) {
 }
 
 func BenchmarkHash(b *testing.B) {
-	h := New(512)
+	h := New(64)
 	src := make([]byte, BlockSize+1)
 	rand.Read(src)
 	b.ResetTimer()

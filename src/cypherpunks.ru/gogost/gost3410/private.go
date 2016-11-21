@@ -132,6 +132,5 @@ func (pk *PrivateKey) KEK(pub *PublicKey, ukm []byte) ([]byte, error) {
 	reverse(t)
 	h.Write(t)
 	t = h.Sum(t[:0])
-	reverse(t)
 	return t, nil
 }

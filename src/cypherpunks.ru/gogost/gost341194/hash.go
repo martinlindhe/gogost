@@ -79,7 +79,7 @@ func (h *Hash) Reset() {
 		0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
 	}
 	h.chk = big.NewInt(0)
-	h.buf = nil
+	h.buf = h.buf[:0]
 }
 
 func (h *Hash) BlockSize() int {
@@ -266,5 +266,6 @@ func (h *Hash) Sum(in []byte) []byte {
 	chkBytes := chk.Bytes()
 	copy(block[BlockSize-len(chkBytes):], chkBytes)
 	hsh = h.step(hsh, *block)
+	blockReverse(hsh[:], hsh[:])
 	return append(in, hsh[:]...)
 }

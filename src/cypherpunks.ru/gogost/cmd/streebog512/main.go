@@ -14,25 +14,22 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-// Command-line 34.11-2012 hash function.
+// Command-line 34.11-2012 512-bit hash function.
 package main
 
 import (
 	"encoding/hex"
 	"flag"
 	"fmt"
-	"hash"
 	"io"
 	"os"
 
 	"cypherpunks.ru/gogost"
-	"cypherpunks.ru/gogost/gost34112012256"
 	"cypherpunks.ru/gogost/gost34112012512"
 )
 
 var (
-	digestSize = flag.Int("size", 256, "Digest size in bits (either 256 or 512)")
-	version    = flag.Bool("version", false, "Print version information")
+	version = flag.Bool("version", false, "Print version information")
 )
 
 func main() {
@@ -41,12 +38,7 @@ func main() {
 		fmt.Println(gogost.Version)
 		return
 	}
-	var h hash.Hash
-	if *digestSize == 256 {
-		h = gost34112012256.New()
-	} else {
-		h = gost34112012512.New()
-	}
+	h := gost34112012512.New()
 	io.Copy(h, os.Stdin)
 	fmt.Println(hex.EncodeToString(h.Sum(nil)))
 }

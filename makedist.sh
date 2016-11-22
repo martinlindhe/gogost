@@ -20,7 +20,7 @@ gpg --detach-sign --sign --local-user 82343436696FC85A gogost-"$release".tar.xz
 tarball=gogost-"$release".tar.xz
 size=$(( $(wc -c < $tarball) / 1024 ))
 hash=$(gpg --print-md SHA256 < $tarball)
-hashsb=$($HOME/work/gogost/gogost-streebog < $tarball)
+hashsb=$($HOME/work/gogost/streebog256 < $tarball)
 
 cat <<EOF
 An entry for documentation:

@@ -8,9 +8,20 @@ release=$1
 git clone . $tmp/gogost-$release
 cd $tmp/gogost-$release
 git checkout $release
+git submodule update --init
 
+mkdir -p src/cypherpunks.ru/gogost/vendor
+cat > $tmp/includes <<EOF
+golang.org/x/crypto/AUTHORS
+golang.org/x/crypto/CONTRIBUTORS
+golang.org/x/crypto/LICENSE
+golang.org/x/crypto/PATENTS
+golang.org/x/crypto/README
+golang.org/x/crypto/pbkdf2
+EOF
+tar cfCI - src $tmp/includes | tar xfC - src/cypherpunks.ru/gogost/vendor
 find . -name .git -type d | xargs rm -fr
-rm -f www* makedist* TODO
+rm -fr www* makedist* TODO src/golang.org $tmp/includes
 
 cd ..
 tar cvf gogost-"$release".tar gogost-"$release"

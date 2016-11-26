@@ -91,8 +91,36 @@ website and, for example, run tests with benchmarks:
 % wget http://www.cypherpunks.ru/gogost/gogost-1.1.tar.xz
 % wget http://www.cypherpunks.ru/gogost/gogost-1.1.tar.xz.sig
 % gpg --verify gogost-1.1.tar.xz.sig gogost-1.1.tar.xz
-% xz -d < gogost-1.1.tar.gz | tar xf -
+% xz -d < gogost-1.1.tar.xz | tar xf -
 % make -C gogost-1.1 bench
+@end verbatim
+
+And then you can include its source code in your project for example
+like this:
+
+@verbatim
+% mkdir -p myproj/src
+% export GOPATH=$PWD/myproj
+% cd myproj/src
+% cat > main.go <<EOF
+package main
+
+import (
+    "encoding/hex"
+    "fmt"
+
+    "cypherpunks.ru/gogost/gost34112012256"
+)
+
+func main() {
+    h := gost34112012256.New()
+    h.Write([]byte("hello world"))
+    fmt.Println(hex.EncodeToString(h.Sum(nil)))
+}
+EOF
+% cp -r ../../gogost-1.1/src/cypherpunks.ru .
+% go run main.go
+c600fd9dd049cf8abd2f5b32e840d2cb0e41ea44de1c155dcd88dc84fe58a855
 @end verbatim
 
 @multitable {XXXXX} {XXXX KiB} {link sign} {xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx} {xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx}

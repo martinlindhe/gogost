@@ -1,7 +1,20 @@
+2.0:
+    * 34.11-2012 is split on two different modules: gost34112012256 and
+      gost34112012512
+    * 34.11-94's digest is reversed. Now it is compatible with TC26's
+      HMAC and PBKDF2 test vectors
+    * gogost-streebog is split to streebog256 and streebog512
+      correspondingly by analogy with sha* utilities
+    * added VKO 34.10-2012 support with corresponding test vectors
+    * gost3410.DigestSizeX is renamed to gost3410.ModeX because it is
+      not related to digest size, but parameters and key sizes
+    * KEK functions take big.Int UKM value. Use NewUKM to unmarshal
+      raw binary UKM
+
 1.1:
     * gogost-streebog is able to use either 256 or 512 bits digest size
     * 34.13-2015 padding methods
     * 28147-89 CBC mode of operation
 
 1.0:
-    Initial release
+    Initial release.

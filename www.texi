@@ -51,6 +51,36 @@ mailing list. Announcements also go to this mailing list.
 
 @insertcopying
 
+@node News
+@unnumbered News
+
+@table @strong
+
+@item 2.0
+    @itemize
+    @item 34.11-2012 is split on two different modules:
+        @code{gost34112012256} and @code{gost34112012512}
+    @item 34.11-94's digest is reversed. Now it is compatible with TC26's
+      HMAC and PBKDF2 test vectors
+    @item @code{gogost-streebog} is split to @code{streebog256} and
+        @code{streebog512} correspondingly by analogy with sha* utilities
+    @item added VKO 34.10-2012 support with corresponding test vectors
+    @item @code{gost3410.DigestSizeX} is renamed to
+        @code{gost3410.ModeX} because it is not related to digest size,
+        but parameters and key sizes
+    @item KEK functions take @code{big.Int} UKM value. Use @code{NewUKM}
+        to unmarshal raw binary UKM
+    @end itemize
+
+@item 1.1
+    @itemize
+    @item gogost-streebog is able to use either 256 or 512 bits digest size
+    @item 34.13-2015 padding methods
+    @item 28147-89 CBC mode of operation
+    @end itemize
+
+@end table
+
 @node Download
 @unnumbered Download
 

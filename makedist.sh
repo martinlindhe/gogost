@@ -54,11 +54,44 @@ Source code and its signature for that version can be found here:
 
 Streebog-256 hash: $hashsb
 SHA256 hash: $hash
-GPG key ID: 0x82343436696FC85A GoGOST releases <gogost at cypherpunks dot ru>
-Fingerprint: CEBD 1282 2C46 9C02 A81A  0467 8234 3436 696F C85A
+GPG key: CEBD 1282 2C46 9C02 A81A  0467 8234 3436 696F C85A
+         GoGOST releases <gogost at cypherpunks dot ru>
 
 Please send questions regarding the use of GoGOST, bug reports and patches
 to mailing list: https://lists.cypherpunks.ru/mailman/listinfo/gost
+EOF
+
+cat <<EOF
+Subject: [RU] Состоялся релиз GoGOST $release
+
+Я рад сообщить о выходе релиза GoGOST $release!
+
+GoGOST это свободное программное обеспечение реализующее
+криптографические функции ГОСТ на чистом Go. ГОСТ -- ГОсударственный
+СТандарт Российской Федерации (а также Советского Союза).
+
+------------------------ >8 ------------------------
+
+Основные усовершенствования в этом релизе:
+
+
+------------------------ >8 ------------------------
+
+Домашняя страница GoGOST: http://www.cypherpunks.ru/gogost/
+
+Исходный код и его подпись для этой версии могут быть найдены здесь:
+
+    http://www.cypherpunks.ru/gogost/gogost-${release}.tar.xz ($size KiB)
+    http://www.cypherpunks.ru/gogost/gogost-${release}.tar.xz.sig
+
+Streebog-256 хэш: $hashsb
+SHA256 хэш: $hash
+GPG ключ: CEBD 1282 2C46 9C02 A81A  0467 8234 3436 696F C85A
+          GoGOST releases <gogost at cypherpunks dot ru>
+
+Пожалуйста, все вопросы касающиеся использования GoGOST, отчёты об
+ошибках и патчи отправляйте в gost почтовую рассылку:
+https://lists.cypherpunks.ru/mailman/listinfo/gost
 EOF
 
 mv $tmp/$tarball $tmp/"$tarball".sig $cur/gogost.html/

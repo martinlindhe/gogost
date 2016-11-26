@@ -5,7 +5,9 @@ website and, for example, run tests with benchmarks:
     % wget http://www.cypherpunks.ru/gogost/gogost-1.1.tar.xz.sig
     % gpg --verify gogost-1.1.tar.xz.sig gogost-1.1.tar.xz
     % xz -d < gogost-1.1.tar.xz | tar xf -
-    % make -C gogost-1.1 bench
+    % make -C gogost-1.1 all bench
+    % echo hello world | ./gogost-1.1/streebog256
+    f72018189a5cfb803dbe1f2149cf554c40093d8e7f81c21e08ac5bcd09d9934d
 
 And then you can include its source code in your project for example
 like this:

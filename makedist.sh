@@ -42,7 +42,7 @@ An entry for documentation:
 EOF
 
 cat <<EOF
-Subject: GoGOST $release release announcement
+Subject: [EN] GoGOST $release release announcement
 
 I am pleased to announce GoGOST $release release availability!
 

@@ -16,14 +16,14 @@
 
 package gost3410
 
-type DigestSize uint8
+type Mode int
 
 // Curve params: p, q, a, b, bx, by
 type CurveParams [6][]byte
 
 var (
-	DigestSize2001 DigestSize = 32
-	DigestSize2012 DigestSize = 64
+	Mode2001 Mode = Mode(32)
+	Mode2012 Mode = Mode(64)
 
 	CurveParamsGostR34102001cc CurveParams = CurveParams([6][]byte{
 		{0xC0, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,

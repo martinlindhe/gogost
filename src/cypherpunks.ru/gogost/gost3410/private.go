@@ -20,60 +20,57 @@ import (
 	"errors"
 	"io"
 	"math/big"
-
-	"cypherpunks.ru/gogost/gost28147"
-	"cypherpunks.ru/gogost/gost341194"
 )
 
 type PrivateKey struct {
-	c   *Curve
-	ds  int
-	key *big.Int
+	c    *Curve
+	mode Mode
+	key  *big.Int
 }
 
-func NewPrivateKey(curve *Curve, ds DigestSize, raw []byte) (*PrivateKey, error) {
-	key := make([]byte, len(raw))
+func NewPrivateKey(curve *Curve, mode Mode, raw []byte) (*PrivateKey, error) {
+	if len(raw) != int(mode) {
+		errors.New("Invalid private key length")
+	}
+	key := make([]byte, int(mode))
 	copy(key, raw)
 	reverse(key)
 	k := bytes2big(key)
 	if k.Cmp(zero) == 0 {
-		return nil, errors.New("zero private key")
+		return nil, errors.New("Zero private key")
 	}
-	return &PrivateKey{curve, int(ds), k}, nil
+	return &PrivateKey{curve, mode, k}, nil
 }
 
-func GenPrivateKey(curve *Curve, ds DigestSize, rand io.Reader) (*PrivateKey, error) {
-	raw := make([]byte, int(ds))
+func GenPrivateKey(curve *Curve, mode Mode, rand io.Reader) (*PrivateKey, error) {
+	raw := make([]byte, int(mode))
 	if _, err := io.ReadFull(rand, raw); err != nil {
 		return nil, err
 	}
-	return NewPrivateKey(curve, ds, raw)
+	return NewPrivateKey(curve, mode, raw)
 }
 
-func (pk *PrivateKey) Raw() []byte {
-	raw := pad(pk.key.Bytes(), pk.ds)
+func (prv *PrivateKey) Raw() []byte {
+	raw := pad(prv.key.Bytes(), int(prv.mode))
 	reverse(raw)
 	return raw
 }
 
-func (pk *PrivateKey) PublicKey() (*PublicKey, error) {
-	x, y, err := pk.c.Exp(pk.key, pk.c.Bx, pk.c.By)
+func (prv *PrivateKey) PublicKey() (*PublicKey, error) {
+	x, y, err := prv.c.Exp(prv.key, prv.c.Bx, prv.c.By)
 	if err != nil {
 		return nil, err
 	}
-	return &PublicKey{pk.c, pk.ds, x, y}, nil
+	return &PublicKey{prv.c, prv.mode, x, y}, nil
 }
 
-func (pk *PrivateKey) SignDigest(digest []byte, rand io.Reader) ([]byte, error) {
-	if len(digest) != pk.ds {
-		return nil, errors.New("Invalid input digest length")
-	}
+func (prv *PrivateKey) SignDigest(digest []byte, rand io.Reader) ([]byte, error) {
 	e := bytes2big(digest)
-	e.Mod(e, pk.c.Q)
+	e.Mod(e, prv.c.Q)
 	if e.Cmp(zero) == 0 {
 		e = big.NewInt(1)
 	}
-	kRaw := make([]byte, pk.ds)
+	kRaw := make([]byte, int(prv.mode))
 	var err error
 	var k *big.Int
 	var r *big.Int
@@ -84,53 +81,27 @@ Retry:
 		return nil, err
 	}
 	k = bytes2big(kRaw)
-	k.Mod(k, pk.c.Q)
+	k.Mod(k, prv.c.Q)
 	if k.Cmp(zero) == 0 {
 		goto Retry
 	}
-	r, _, err = pk.c.Exp(k, pk.c.Bx, pk.c.By)
+	r, _, err = prv.c.Exp(k, prv.c.Bx, prv.c.By)
 	if err != nil {
 		return nil, err
 	}
-	r.Mod(r, pk.c.Q)
+	r.Mod(r, prv.c.Q)
 	if r.Cmp(zero) == 0 {
 		goto Retry
 	}
-	d.Mul(pk.key, r)
+	d.Mul(prv.key, r)
 	k.Mul(k, e)
 	s.Add(d, k)
-	s.Mod(s, pk.c.Q)
+	s.Mod(s, prv.c.Q)
 	if s.Cmp(zero) == 0 {
 		goto Retry
 	}
-	return append(pad(s.Bytes(), pk.ds), pad(r.Bytes(), pk.ds)...), nil
-}
-
-// Make Diffie-Hellman computation. Key Encryption Key calculation.
-// UKM is user keying material, also called VKO-factor, 8-bytes long.
-// It is based on RFC 4357 VKO GOST R 34.10-2001 with little-endian hash
-// output.
-func (pk *PrivateKey) KEK(pub *PublicKey, ukm []byte) ([]byte, error) {
-	if len(ukm) != 8 {
-		return nil, errors.New("UKM must be 8 bytes long")
-	}
-	keyX, keyY, err := pk.c.Exp(pk.key, pub.x, pub.y)
-	if err != nil {
-		return nil, err
-	}
-	t := make([]byte, DigestSize2001)
-	copy(t[int(DigestSize2001)-len(ukm):], ukm)
-	keyX, keyY, err = pk.c.Exp(bytes2big(t), keyX, keyY)
-	if err != nil {
-		return nil, err
-	}
-	h := gost341194.New(&gost28147.GostR3411_94_CryptoProParamSet)
-	copy(t, pad(keyX.Bytes(), int(DigestSize2001)))
-	reverse(t)
-	h.Write(t)
-	copy(t, pad(keyY.Bytes(), int(DigestSize2001)))
-	reverse(t)
-	h.Write(t)
-	t = h.Sum(t[:0])
-	return t, nil
+	return append(
+		pad(s.Bytes(), int(prv.mode)),
+		pad(r.Bytes(), int(prv.mode))...,
+	), nil
 }

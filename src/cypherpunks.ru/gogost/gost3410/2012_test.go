@@ -146,7 +146,7 @@ func TestGCL3Vectors(t *testing.T) {
 	if err != nil {
 		t.FailNow()
 	}
-	prv, err := NewPrivateKey(c, DigestSize2012, priv)
+	prv, err := NewPrivateKey(c, Mode2012, priv)
 	if err != nil {
 		t.FailNow()
 	}
@@ -179,7 +179,7 @@ func TestRandom2012(t *testing.T) {
 	f := func(data [31]byte, digest [64]byte) bool {
 		prv, err := NewPrivateKey(
 			c,
-			DigestSize2012,
+			Mode2012,
 			append([]byte{0xde}, data[:]...),
 		)
 		if err != nil {
@@ -190,7 +190,7 @@ func TestRandom2012(t *testing.T) {
 			return false
 		}
 		pubRaw := pub.Raw()
-		pub, err = NewPublicKey(c, DigestSize2012, pubRaw)
+		pub, err = NewPublicKey(c, Mode2012, pubRaw)
 		if err != nil {
 			return false
 		}
@@ -211,7 +211,7 @@ func TestRandom2012(t *testing.T) {
 
 func BenchmarkSign2012(b *testing.B) {
 	c, _ := NewCurveFromParams(CurveParamsGostR34102012TC26ParamSetA)
-	prv, err := GenPrivateKey(c, DigestSize2012, rand.Reader)
+	prv, err := GenPrivateKey(c, Mode2012, rand.Reader)
 	if err != nil {
 		b.FailNow()
 	}
@@ -225,7 +225,7 @@ func BenchmarkSign2012(b *testing.B) {
 
 func BenchmarkVerify2012(b *testing.B) {
 	c, _ := NewCurveFromParams(CurveParamsGostR34102012TC26ParamSetA)
-	prv, err := GenPrivateKey(c, DigestSize2012, rand.Reader)
+	prv, err := GenPrivateKey(c, Mode2012, rand.Reader)
 	if err != nil {
 		b.FailNow()
 	}

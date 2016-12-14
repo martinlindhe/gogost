@@ -161,3 +161,24 @@ func BenchmarkVerify2001(b *testing.B) {
 		pub.VerifyDigest(digest, sign)
 	}
 }
+
+func TestPrvEqualsTo1(t *testing.T) {
+	c, _ := NewCurveFromParams(CurveParamsGostR34102001Test)
+	prv, err := NewPrivateKey(c, Mode2001, []byte{0x01})
+	if err != nil {
+		t.FailNow()
+	}
+	pub, err := prv.PublicKey()
+	if err != nil {
+		t.FailNow()
+	}
+	digest := []byte{0x01, 0x01, 0x01, 0x01, 0x01, 0x01, 0x01, 0x01, 0x01, 0x01, 0x01, 0x01, 0x01, 0x01, 0x01, 0x01, 0x01, 0x01, 0x01, 0x01, 0x01, 0x01, 0x01, 0x01, 0x01, 0x01, 0x01, 0x01, 0x01, 0x01, 0x01, 0x01}
+	sign, err := prv.SignDigest(digest, rand.Reader)
+	if err != nil {
+		t.FailNow()
+	}
+	valid, err := pub.VerifyDigest(digest, sign)
+	if err != nil || !valid {
+		t.FailNow()
+	}
+}

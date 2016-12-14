@@ -116,14 +116,14 @@ func (c *Curve) add(p1x, p1y, p2x, p2y *big.Int) {
 }
 
 func (c *Curve) Exp(degree, xS, yS *big.Int) (*big.Int, *big.Int, error) {
+	if degree.Cmp(zero) == 0 {
+		return nil, nil, errors.New("Bad degree value")
+	}
 	dg := big.NewInt(0).Sub(degree, bigInt1)
 	tx := big.NewInt(0).Set(xS)
 	ty := big.NewInt(0).Set(yS)
 	cx := big.NewInt(0).Set(xS)
 	cy := big.NewInt(0).Set(yS)
-	if dg.Cmp(zero) == 0 {
-		return nil, nil, errors.New("Bad degree value")
-	}
 	for dg.Cmp(zero) != 0 {
 		if dg.Bit(0) == 1 {
 			c.add(tx, ty, cx, cy)

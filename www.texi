@@ -3,7 +3,7 @@
 @settitle GoGOST
 
 @copying
-Copyright @copyright{} 2015-2016 @email{stargrave@@stargrave.org, Sergey Matveev}
+Copyright @copyright{} 2015-2017 @email{stargrave@@stargrave.org, Sergey Matveev}
 @end copying
 
 @node Top

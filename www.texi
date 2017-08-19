@@ -14,7 +14,7 @@ GOST is GOvernment STandard of Russian Federation (and Soviet Union).
 It is
 @url{https://www.gnu.org/philosophy/pragmatic.html, copylefted}
 @url{https://www.gnu.org/philosophy/free-sw.html, free software}:
-licenced under @url{https://www.gnu.org/licenses/gpl-3.0.html, GPLv3+}.
+licenced under @url{https://www.gnu.org/licenses/lgpl.html, GNU LGPLv3+}.
 You can read about GOST algorithms @url{http://gost.cypherpunks.ru/, more}.
 
 Site is also available as @url{http://a5zmymxbjreuvbftgzmu64vcw2ssa3s44c2dn2jryxee6utn34qa.b32.i2p/, I2P service}.
@@ -57,6 +57,9 @@ mailing list. Announcements also go to this mailing list.
 @unnumbered News
 
 @table @strong
+
+@item 2.1
+    Licence changed from GNU GPLv3+ to GNU LGPLv3+.
 
 @item 2.0
     @itemize

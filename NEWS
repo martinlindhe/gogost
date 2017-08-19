@@ -1,3 +1,6 @@
+2.1:
+    Licence changed from GNU GPLv3+ to GNU LGPLv3+.
+
 2.0:
     * 34.11-2012 is split on two different modules: gost34112012256 and
       gost34112012512

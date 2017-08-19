@@ -20,7 +20,7 @@ Known problems:
 * intermediate calculation values are not zeroed
 * 34.10 is not time constant and slow
 
-GoGOST is free software: see the file COPYING for copying conditions.
+GoGOST is free software: see the file COPYING.LESSER for copying conditions.
 
 GoGOST'es home page is: http://gogost.cypherpunks.ru/
 Also available as I2P service:

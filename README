@@ -22,8 +22,10 @@ Known problems:
 
 GoGOST is free software: see the file COPYING for copying conditions.
 
-GoGOST'es home page is: http://www.cypherpunks.ru/gogost/
-You can read about GOST algorithms more: http://www.cypherpunks.ru/gost/
+GoGOST'es home page is: http://gogost.cypherpunks.ru/
+Also available as I2P service:
+http://a5zmymxbjreuvbftgzmu64vcw2ssa3s44c2dn2jryxee6utn34qa.b32.i2p/
+You can read about GOST algorithms more: http://gost.cypherpunks.ru/
 
 Please send questions, bug reports and patches to
 https://lists.cypherpunks.ru/mailman/listinfo/gost

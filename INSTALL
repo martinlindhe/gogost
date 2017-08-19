@@ -1,8 +1,8 @@
 Preferable way is to download tarball with the signature from official
 website and, for example, run tests with benchmarks:
 
-    % wget http://www.cypherpunks.ru/gogost/gogost-1.1.tar.xz
-    % wget http://www.cypherpunks.ru/gogost/gogost-1.1.tar.xz.sig
+    % wget http://gogost.cypherpunks.ru/gogost-1.1.tar.xz
+    % wget http://gogost.cypherpunks.ru/gogost-1.1.tar.xz.sig
     % gpg --verify gogost-1.1.tar.xz.sig gogost-1.1.tar.xz
     % xz -d < gogost-1.1.tar.xz | tar xf -
     % make -C gogost-1.1 all bench

@@ -15,7 +15,9 @@ It is
 @url{https://www.gnu.org/philosophy/pragmatic.html, copylefted}
 @url{https://www.gnu.org/philosophy/free-sw.html, free software}:
 licenced under @url{https://www.gnu.org/licenses/gpl-3.0.html, GPLv3+}.
-You can read about GOST algorithms @url{http://www.cypherpunks.ru/gost/, more}.
+You can read about GOST algorithms @url{http://gost.cypherpunks.ru/, more}.
+
+Site is also available as @url{http://a5zmymxbjreuvbftgzmu64vcw2ssa3s44c2dn2jryxee6utn34qa.b32.i2p/, I2P service}.
 
 Currently supported algorithms are:
 
@@ -88,8 +90,8 @@ Preferable way is to download tarball with the signature from
 website and, for example, run tests with benchmarks:
 
 @verbatim
-% wget http://www.cypherpunks.ru/gogost/gogost-1.1.tar.xz
-% wget http://www.cypherpunks.ru/gogost/gogost-1.1.tar.xz.sig
+% wget http://gogost.cypherpunks.ru/gogost-1.1.tar.xz
+% wget http://gogost.cypherpunks.ru/gogost-1.1.tar.xz.sig
 % gpg --verify gogost-1.1.tar.xz.sig gogost-1.1.tar.xz
 % xz -d < gogost-1.1.tar.xz | tar xf -
 % make -C gogost-1.1 all bench

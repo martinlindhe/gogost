@@ -133,6 +133,11 @@ c600fd9dd049cf8abd2f5b32e840d2cb0e41ea44de1c155dcd88dc84fe58a855
 @multitable {XXXXX} {XXXX KiB} {link sign} {xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx} {xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx}
 @headitem Version @tab Size @tab Tarball @tab SHA256 checksum @tab Streebog-256 checksum
 
+@item 2.1 @tab 41 KiB
+@tab @url{gogost-2.1.tar.xz, link} @url{gogost-2.1.tar.xz.sig, sign}
+@tab @code{18C0D6D2 94573332 261178B8 ED461BD2 078738B2 E9E33D8B EE6AE694 797CB5BD}
+@tab @code{6fca9feb4a1cab8cbf4a0f1b9402b49f7fcd6470b3a475128a1d343d663d0599}
+
 @item 2.0 @tab 39 KiB
 @tab @url{gogost-2.0.tar.xz, link} @url{gogost-2.0.tar.xz.sig, sign}
 @tab @code{28E8C15C 0EC5CC2A 47A8CCDA DF9EADB5 E46970AA FB7FAAF3 AA250FFC 79CE57F7}

@@ -15,19 +15,19 @@
 // License along with this program.  If not, see
 // <http://www.gnu.org/licenses/>.
 
-// GOST R 34.11-2012 512-bit hash function.
+// GOST R 34.11-2012 256-bit hash function.
 // RFC 6986.
-package gost34112012512
+package gost34112012256
 
 import (
-	"cypherpunks.ru/gogost/internal/gost34112012"
+	"github.com/martinlindhe/gogost/internal/gost34112012"
 )
 
 const (
 	BlockSize = gost34112012.BlockSize
-	Size      = 64
+	Size      = 32
 )
 
 func New() *gost34112012.Hash {
-	return gost34112012.New(64)
+	return gost34112012.New(32)
 }
